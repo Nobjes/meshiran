@@ -27,7 +27,7 @@ use Illuminate\Http\Request;
 |
 */
 
-// users用のAPIルーティング
+// users用のAPIルーティング Test
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user(); //変更した部分
     
