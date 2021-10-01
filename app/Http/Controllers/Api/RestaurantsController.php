@@ -46,7 +46,7 @@ public function store(Request $request)
         $restaurant->r_prefecture_id = $request->r_prefecture_id;
         $restaurant->r_district = $request->r_district;
         $restaurant->food_category_id = $request-> food_category_id;
-        $restaurant->restaurant_adress= $request-> restaurant_adress;
+        $restaurant->adress= $request-> adress;
         $restaurant->opening_hours = $request-> opening_hours;
         $restaurant->phone_number = $request-> phone_number; 
         $restaurant->closed_day= $request-> closed_day;
@@ -70,7 +70,7 @@ public function update(Request $request, Restaurant $restaurant)
         $restaurant->r_prefecture_id = $request->r_prefecture_id;
         $restaurant->r_district = $request->r_district;
         $restaurant->food_category_id = $request-> food_category_id;
-        $restaurant->restaurant_adress= $request-> restaurant_adress;
+        $restaurant->adress= $request-> adress;
         $restaurant->opening_hours = $request-> opening_hours;
         $restaurant->phone_number = $request-> phone_number; 
         $restaurant->closed_day= $request-> closed_day;

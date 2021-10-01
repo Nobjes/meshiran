@@ -29,10 +29,10 @@ public function index()
 public function store(Request $request)
     {
         $map = new Map;
-        $map ->restaurant_id = $request->restaurant_id;
+        $map ->restaurant_adress = $request->restaurant_adress;
         $map ->post_id = $request->post_id;
         $map ->user_id = Auth::id();//ここでログインしているユーザidを登録しています
-        $map ->area_id = $request->area_id;
+        $map ->follow_id = $request->follow_id;
         $map ->save();  
     }
     
@@ -46,10 +46,10 @@ public function show(Map $map)
 public function update(Request $request, Map $map)
     {
         $map = new Map;
-        $map ->restaurant_id = $request->restaurant_id;
+        $map ->restaurant_adress = $request->restaurant_adress;
         $map ->post_id = $request->post_id;
         $map ->user_id = $request->user_id;
-        $map ->area_id = $request->area_id;
+        $map ->follow_id = $request->follow_id;
         $map ->save();  
     }
     

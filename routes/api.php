@@ -68,6 +68,10 @@ Route::resource('wants', 'Api\WantsController' , ['except' => ['create', 'edit']
 Route::resource('food_categories', 'Api\Food_categoriesController' , ['except' => ['create', 'edit'] ]);
 
 
+// Food_category_user用のAPIルーティング
+Route::resource('food_category_users', 'Api\Food_category_usersController' , ['except' => ['create', 'edit'] ]);
+
+
 
 // Movies用のAPIルーティング
 Route::resource('movies', 'Api\MoviesController' , ['except' => ['create', 'edit'] ]);

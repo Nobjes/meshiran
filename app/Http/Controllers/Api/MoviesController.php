@@ -116,7 +116,7 @@ public function upload(Request $request){
         $user->save();
 
         //public/uploadフォルダを作成
-        $target_path = public_path('/uploads/');
+        $target_path = public_path('/movie/');
 
         //ファイルをpublic/uploadフォルダに移動
         $file->move($target_path,$fileName);
