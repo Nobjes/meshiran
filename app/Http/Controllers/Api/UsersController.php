@@ -71,7 +71,7 @@ class UsersController extends Controller
     $user->name =$request->name;
     
      //public/uploadフォルダを作成
-    $target_path = public_path('/upload/');
+    $target_path = public_path('/image/');
 
     
     // ファイルの拡張子取得

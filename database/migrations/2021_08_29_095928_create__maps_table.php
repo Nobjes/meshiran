@@ -17,14 +17,14 @@ class CreateMapsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
-            $table->unsignedBigInteger('restaurant_id');
+            $table->string('restaurant_adress');
             $table->unsignedBigInteger('follow_id');
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
+            $table->foreign('restaurant_adress')->references('adress')->on('restaurants')->onDelete('cascade');
             $table->foreign('follow_id')->references('id')->on('follows')->onDelete('cascade');
-            $table->unique(['user_id', 'post_id','restaurant_id','follow_id'],'uq_roles'); //Laravelは複合主キーが扱いにくいのでユニークで代用
+            $table->unique(['user_id', 'post_id','restaurant_adress','follow_id'],'uq_roles'); //Laravelは複合主キーが扱いにくいのでユニークで代用
        });
     }
 
