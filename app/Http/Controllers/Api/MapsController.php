@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Map;
 use App\User;//この行を上に追加
 use App\Post;//この行を上に追加
-use App\Area;//この行を上に追加
 use Auth;//この行を上に追加
 use Validator;//この行を上に追加
 use Illuminate\Http\Request;
