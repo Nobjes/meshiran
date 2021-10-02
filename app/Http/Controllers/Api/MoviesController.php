@@ -22,7 +22,7 @@ class MoviesController extends Controller
 //ログインユーザーのみ使える機能にする　これを追加する！順番重要です！最初にログイン確認です。
 public function __construct()
 {
-    $this->middleware('auth');
+    //$this->middleware('auth');
 }
 
  
@@ -44,20 +44,65 @@ public function index()
 
 public function store(Request $request)
     {
+        //バリデーション
+        $validator = Validator::make($request->all(), [
+            'post_id' => 'required',
+            'movie_url' => 'file|max:10240',
+            ]);
+
+        //バリデーション:エラー 
+        if ($validator->fails()) {
+            // return redirect('/')
+            // ->withInput()
+            // ->withErrors($validator);
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $movie_org_filename = "";
+        if($request->file('movie_url')){
+            if ($request->file('movie_url')->isValid([])) {
+                $filesize = $request->file('movie_url')->getSize();
+                $filename = $request->file('movie_url')->store('public/movie_org');
+                $movie_fullpath = storage_path() . '/' . $filename;
+                $movie_org_filename = basename($filename);
+            }
+        }
+
+        $duration = FFMpeg\FFProbe::create()->format($movie_fullpath)->get('duration');
+        if($duration > 15){
+            return response()->json([
+                'status' => 400,
+                'errors' => "最大動画秒数は15秒を超えています"
+            ], 400);
+        }
+
+    
         $movie= new Movie;
-        $movie ->id = $request->id;
-        $movie ->movie_url= $request->movie_url;
-        $movie ->movie_type = $request->movie_type;
-        $movie->movie_size = $request->movie_size; 
+        //$movie ->id = $request->id;
+
+        $ffmpeg = FFMpeg\FFMpeg::create();
+        $video = $ffmpeg->open($movie_fullpath);
+        $format = new FFMpeg\Format\Video\X264();
+        $format->setAudioCodec("libmp3lame");
+        $video->save($format, storage_path() . '/public/movie/' . $movie_org_filename . ".mp4"); 
+
+
+        $movie ->movie_url= $movie_org_filename . ".mp4";
+        $movie ->movie_type = pathinfo($movie_fullpath, PATHINFO_EXTENSION);
+        $movie->movie_size = $filesize;
         $movie->post_id = $request->post_id;
         $movie->user_id = Auth::id();//ここでログインしているユーザidを登録しています
         $movie->save();  
+
+        return response()->json([
+            'status' => 200,
+            'movie' => $movie
+        ], 400);
         
-     /*   $ffmpeg = FFMpeg\FFMpeg::create();
-        $video = $ffmpeg->open('path/to/movie.mov');
-        $format = new FFMpeg\Format\Video\X264();
-        $format->setAudioCodec("libmp3lame");
-        $video->save($format, 'path/to/movie.mp4'); */
+    
     }
     
     

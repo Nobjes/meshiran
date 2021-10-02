@@ -20,7 +20,7 @@ class MapsController extends Controller
      
 public function index()
     {
-         $maps = Map::all();
+         $maps = Map::with(['restaurants'])->get();
          return $maps;
     }
 

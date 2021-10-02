@@ -26,23 +26,18 @@ class UsersController extends Controller
     
     //バリデーション
     $validator = Validator::make($request->all(), [
-    'name' => 'required|unique:posts|max:30',
+    'name' => 'required|unique:users|max:30',
     'profile_image_url' => 'nullable|file|image|mimes:jpg,jpeg,png',
     'birthday' => 'required',
     'sex' => 'required',
     'email' => 'required|max:255',
     'password' => 'required|max:30',
     'u_country_id' => 'required',
-    'u_prefecture_id' => 'nullable',
-    'u_district' => 'nullable',
+    'u_prefecture_id' => 'required',
+    'u_district' => 'required',
     'profile_text' => 'nullable|string|max:150'
     ]);
     
-   
-   
-     // 画像ファイル取得
-    $file = $request->profile_image_url;
-
     /*
     // ログインユーザー取得
     $user = Auth::user();
@@ -50,9 +45,13 @@ class UsersController extends Controller
   
     //バリデーション:エラー 
     if ($validator->fails()) {
-    return redirect('/')
-    ->withInput()
-    ->withErrors($validator);
+        // return redirect('/')
+        // ->withInput()
+        // ->withErrors($validator);
+        return response()->json([
+            'status' => 400,
+            'errors' => $validator->errors()
+        ], 400);
     }
     
     /*
@@ -67,11 +66,21 @@ class UsersController extends Controller
     
     //以下に登録処理を記述（Eloquentモデル）
     $user = new User;
-    $user->$request->id;
+    //$user->$request->id;
     $user->name =$request->name;
     
      //public/uploadフォルダを作成
-    $target_path = public_path('/image/');
+    //$target_path = public_path('/image/');
+
+    // 画像ファイル取得
+    //$file = $request->profile_image_url;
+
+    if($request->file('profile_image_url')){
+        if ($request->file('profile_image_url')->isValid([])) {
+            $filename = $request->file('profile_image_url')->store('public/image');
+            $user->profile_image_url = basename($filename);
+        }
+    }
 
     
     // ファイルの拡張子取得
@@ -82,25 +91,30 @@ class UsersController extends Controller
     
     
     //ファイルをpublic/uploadフォルダに移動
-    $file->move($target_path,$file);
+    //$file->move($target_path,$file);
 
 
     // 画像のファイル名を任意のDBに保存
-    $user->profile_image_url = $file;
+    //$user->profile_image_url = $file;
     $user->birthday = $request->birthday;
     $user->sex = $request->sex;
     $user->email = $request->email;
-    $user->password = $request->password; 
+    $user->password = bcrypt($request->password); 
     $user->u_country_id = $request-> u_country_id;
     $user->u_prefecture_id = $request-> u_prefecture_id;
     $user->u_district = $request-> u_district;
     $user->profile_text = $request-> profile_text;
+
     $user->save();  
     
    
-return view ('/login',[
-    'users' => $users
-    ]);
+// return view ('/login',[
+//     'users' => $users
+//     ]);
+    return response()->json([
+        'status' => 200,
+        'users' => $user
+    ], 400);
     
 
 }
