@@ -110,4 +110,5 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 //login用のルーティング
 Route::post('login', 'Api\AuthController@login');
+Route::post('register', 'Api\UsersController@store');
  
