@@ -22,7 +22,7 @@ public function index()
 
 public function store(Follow $follow)
     {
-        $follow = new Follows;
+        $follow = new Follow;
         $follow->following_user_id = $request->following_user_id;
         $follow->Followed_user_id = $request->followed_user_id;
         $follow->save();  
@@ -36,7 +36,7 @@ public function show(Follow $follow)
     
 public function update(Request $request, Follow $follow)
       {
-        $follow = new Follows;
+        $follow = new Follow;
         $follow->following_user_id = $request->following_user_id;
         $follow->Followed_user_id = $request->followed_user_id;
         $follow->save();  

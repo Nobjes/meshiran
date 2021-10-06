@@ -34,7 +34,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // posts用のAPIルーティング
-Route::group(['middleware' => ['auth:api']], function(){
+//Route::group(['middleware' => ['auth:api']], function(){
+Route::name('test.')->group(function(){
     Route::resource('posts', 'Api\PostsController' , ['except' => ['create', 'edit'] ]);
 
 
