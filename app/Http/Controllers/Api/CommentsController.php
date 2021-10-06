@@ -42,7 +42,7 @@ public function store(Request $request)
         //登録処理
         $comment= new Comment;
         $comment->id = $request->id;
-        $comment->comment_text= $request->$comment_text;
+        $comment->comment_text= $request->comment_text;
         $comment->post_id = $request->post_id;
         $comment->user_id = Auth::id();//ここでログインしているユーザidを登録しています
         $comment ->save();  

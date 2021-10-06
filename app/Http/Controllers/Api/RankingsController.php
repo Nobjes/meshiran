@@ -19,7 +19,9 @@ class RankingsController extends Controller
      */
 public function index()
     {
-        $rankings = Ranking::all();
+        $rankings = Ranking::with(['post' => function ($q){
+            $q->orderBy('restaurant_score', 'DESC');
+        }])->get();
         return $rankings;
     }
 
