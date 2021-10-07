@@ -15,10 +15,10 @@ class CreateRankingsTable extends Migration
     {
         Schema::create('rankings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('ranking_number');
             $table->unsignedBigInteger('user_id'); 
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('food_category_id');
+            $table->Integer('restaurant_score');
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
