@@ -33,9 +33,10 @@ public function store(Request $request)
         
         //バリデーション:エラー
         if ($validator->fails()) {
-            return redirect('/')
-                ->withInput()
-                ->withErrors($validator);
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()
+            ], 400);
         }
         
         //登録処理
