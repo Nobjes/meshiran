@@ -110,6 +110,7 @@ Route::name('test.')->group(function(){
 
 
 //login用のルーティング
+Route::get('login', 'Api\AuthController@login');
 Route::post('login', 'Api\AuthController@login');
 Route::post('register', 'Api\UsersController@store');
  
