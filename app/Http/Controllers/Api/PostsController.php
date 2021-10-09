@@ -36,7 +36,7 @@ public function store(Request $request)
         
         //バリデーション:エラー
         if ($validator->fails()) {
-            return redirect('/')
+            return redirect('バリデーションエラー')
                 ->withInput()
                 ->withErrors($validator);
         }
@@ -48,8 +48,6 @@ public function store(Request $request)
         $post->restaurant_score = $request->restaurant_score;
         $post->post_text = $request->post_text;
         $post->movie_id = $request->movie_id;
-        var_dump($post->toArray());
-        exit;
         $post->save();
     }
     

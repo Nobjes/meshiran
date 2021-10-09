@@ -28,7 +28,7 @@ public function store(Request $request)
         
         //バリデーション 
         $validator = Validator::make($request->all(), [
-            'post_text' => 'required|max:150'
+            'adress' => 'required|max:150'
         ]);
         
         //バリデーション:エラー

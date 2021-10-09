@@ -22,12 +22,13 @@ class CreateRestaurantsTable extends Migration
             $table->unsignedBigInteger('food_category_id');
             $table->string('adress');
             $table->string('opening_hours');
-     	    $table->string('phone_number');
+            $table->string('phone_number');
             $table->string('closed_day');
             $table->tinyInteger('eatin_takeout')->comment('イートインかテイクアウト／1:イートイン 2:テイクアウト');
-            
+        
             $table->foreign('food_category_id')->references('id')->on('food_categories')->onDelete('cascade');
-            $table->unique(['food_category_id'],'uq_roles'); //Laravelは複合主キーが扱いにくいのでユニークで代用
+            $table->unique(['food_category_id'], 'uq_roles'); //Laravelは複合主キーが扱いにくいのでユニークで代用
+            $table->timestamps();
         });
     }
 
